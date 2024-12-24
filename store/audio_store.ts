@@ -13,7 +13,7 @@ interface AudioState {
   audios: Record<string, Audio>; // 以 soundUrl 为键，存储多个音频的状态
   toggleAudio: (soundUrl: string) => void;
   setVolume: (soundUrl: string, newVolume: number) => void;
-  loadFromUrl: () => void;
+  loadAudioFromUrl: () => void;
 }
 
 function extractFileName(input: string) {
@@ -115,7 +115,7 @@ export const useAudioStore = create<AudioState>((set, get) => ({
     updateUrlParams({ sounds: playingAudios });
   },
 
-  loadFromUrl: () => {
+  loadAudioFromUrl: () => {
     const soundsParam = getUrlParam("sounds");
 
     if (soundsParam) {

@@ -15,11 +15,12 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useVideoStore } from "@/store/video_store";
+import { updateUrlParams } from "@/lib/urlUtils";
 
 export default function IndexPage() {
   const { currentBackground, loadBgFromUrl } = useBackgroundStore();
   const { loadVideoFromUrl } = useVideoStore();
-  const loadFromUrl = useAudioStore((state) => state.loadFromUrl);
+  const { loadAudioFromUrl } = useAudioStore();
 
   const [showDialog, setShowDialog] = useState(false);
   const [audioStateLoaded, setAudioStateLoaded] = useState(false);
@@ -44,23 +45,12 @@ export default function IndexPage() {
   const handleConfirm = () => {
     setShowDialog(false);
     setAudioStateLoaded(true);
-    loadFromUrl(); // 加载音频状态
+    loadAudioFromUrl(); // 加载音频状态
   };
 
   const handleCancel = () => {
-    // 用户选择取消播放
     const params = new URLSearchParams(window.location.search);
-
-    // 删除 `sounds` 参数，仅保留其他参数
-    params.delete("sounds");
-
-    // 更新 URL，仅修改 `sounds` 参数
-    window.history.replaceState(
-      null,
-      "",
-      `${window.location.pathname}?${params.toString()}`
-    );
-
+    updateUrlParams({sounds: null})
     setShowDialog(false);
   };
 
