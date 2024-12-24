@@ -7,6 +7,7 @@ import { ThemeProvider } from "next-themes";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { SiteHeader } from "@/components/site_header";
 import { BottomControls } from "@/components/BottomControls/buttom_controls";
+import { OpeningEffect } from "@/components/OpeningEffect/opening_effect";
 
 export const metadata: Metadata = {
   title: {
@@ -41,15 +42,18 @@ export default function RootLayout({ children }: RootLayoutProps) {
           )}
         >
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-            <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
-              <div className="absolute top-0 bottom-0 left-0 right-0">
-                {children}
+            <OpeningEffect>
+              <div className="relative flex min-h-screen flex-col">
+                <SiteHeader />
+                <div className="absolute top-0 bottom-0 left-0 right-0">
+                  {children}
+                </div>
+                <BottomControls />
               </div>
-              <BottomControls />
-            </div>
+            </OpeningEffect>
+            
  
-            <TailwindIndicator />
+            {/* <TailwindIndicator /> */}
           </ThemeProvider>
         </body>
       </html>

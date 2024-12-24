@@ -73,7 +73,7 @@ export const SettingsSheet = () => {
                 placeholder="Paste youtube link"
                 value={currentVideoUrl}
                 onChange={handleInputChange}
-                className="border border-gray-300 rounded px-2 py-1 w-[500px]"
+                className="border border-gray-300 rounded px-2 py-1 max-w-[500px]"
               />
               {currentVideoUrl && (
                 <span className="flex items-center gap-3 mt-3">
