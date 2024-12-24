@@ -28,8 +28,9 @@ export default function IndexPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const soundsParam = params.get("sounds");
+    const videoParam = params.get("video");
 
-    if (soundsParam && !audioStateLoaded) {
+    if ( (videoParam || soundsParam) && !audioStateLoaded) {
       setShowDialog(true);
     }
   }, [audioStateLoaded]);
@@ -38,14 +39,11 @@ export default function IndexPage() {
     loadBgFromUrl();
   }, [loadBgFromUrl]);
 
-  useEffect(() => {
-    loadVideoFromUrl();
-  }, [loadVideoFromUrl]);
-
   const handleConfirm = () => {
     setShowDialog(false);
     setAudioStateLoaded(true);
     loadAudioFromUrl(); // 加载音频状态
+    loadVideoFromUrl()
   };
 
   const handleCancel = () => {

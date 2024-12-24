@@ -59,7 +59,6 @@ export default function BackgroundPlayer() {
   //   window.addEventListener("message", handleMessage);
   //   return () => window.removeEventListener("message", handleMessage);
   // }, [setProgress, setDuration]);
-  
 
   return (
     <div
@@ -68,18 +67,28 @@ export default function BackgroundPlayer() {
       }`}
     >
       {currentVideoUrl && (
-        <iframe
-          ref={iframeRef}
-          className="absolute top-0 left-0 w-full h-full scale-[1.33]"
-          src={`https://www.youtube.com/embed/${getVideoIdFromUrl(
-            currentVideoUrl
-          )}?autoplay=1&loop=1&cc_load_policy=0&controls=0&playlist=${getVideoIdFromUrl(
-            currentVideoUrl
-          )}&enablejsapi=1`}
-          title="YouTube Video"
-          allow="autoplay; fullscreen"
-          allowFullScreen
-        ></iframe>
+        <div className="relative w-full h-screen overflow-hidden bg-black">
+          <iframe
+            ref={iframeRef}
+            className="absolute top-0 left-0 w-full h-full"
+            src={`https://www.youtube.com/embed/${getVideoIdFromUrl(
+              currentVideoUrl
+            )}?autoplay=1&loop=1&cc_load_policy=0&controls=0&playlist=${getVideoIdFromUrl(
+              currentVideoUrl
+            )}&enablejsapi=1`}
+            title="YouTube Video"
+            allow="autoplay; fullscreen"
+            allowFullScreen
+            style={{
+              width: "177.78vh", // 16:9 的比例高度
+              height: "100vh", // 高度占满屏幕
+              transform: "translateX(-50%)", // 横向居中裁剪
+              position: "absolute",
+              left: "50%",
+              top: "0",
+            }}
+          ></iframe>
+        </div>
       )}
     </div>
   );

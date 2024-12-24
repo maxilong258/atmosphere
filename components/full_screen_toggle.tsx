@@ -36,9 +36,9 @@ const FullScreenToggle = () => {
   return (
     <Button onClick={handleFullscreenToggle} variant="ghost" size="icon">
       {isFullscreen ? (
-        <Minimize2 className="h-[1.5rem] w-[1.3rem] text-gray-300"/>
+        <Minimize2 className="h-[1.5rem] w-[1.3rem] text-gray-400"/>
       ) : (
-        <Maximize2 className="h-[1.5rem] w-[1.3rem] text-gray-300"/>
+        <Maximize2 className="h-[1.5rem] w-[1.3rem] text-gray-400"/>
       )}
     </Button>
   );

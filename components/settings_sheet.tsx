@@ -15,8 +15,8 @@ import { BgControl } from "./BgControl/bg_control";
 import { useVideoStore } from "@/store/video_store";
 import { Input } from "./ui/input";
 import { Slider } from "@/components/ui/slider";
-import { useDebounce, useDebouncedCallback } from "use-debounce";
-import { useEffect, useState } from "react";
+// import { useDebounce } from "use-debounce";
+// import { useEffect, useState } from "react";
 
 export const SettingsSheet = () => {
   const {
@@ -34,28 +34,17 @@ export const SettingsSheet = () => {
     // seekTo
   } = useVideoStore();
 
-  const [inputValue, setInputValue] = useState("");
+  // const [inputValue, setInputValue] = useState("");
 
-  const [debouncedValue] = useDebounce(inputValue, 500);
+  // const [debouncedValue] = useDebounce(inputValue, 500);
 
-  useEffect(() => {
-    setVideoUrl(debouncedValue);
-  }, [debouncedValue, setVideoUrl]);
+  // useEffect(() => {
+  //   setVideoUrl(debouncedValue);
+  // }, [debouncedValue, setVideoUrl]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value); // 更新本地状态
-    //   // const params = new URLSearchParams(searchParams);
-    //   // if (term) {
-    //   //   params.set('query', term);
-    //   // } else {
-    //   //   params.delete('query');
-    //   // }
-    //   // replace(`${pathname}?${params.toString()}`);
+    setVideoUrl(e.target.value);
   };
-
-  useEffect(() => {
-    setInputValue(currentVideoUrl)
-  }, [currentVideoUrl])
 
   const handleVolumeChange = (value: number[]) => {
     const newVolume = value[0];
@@ -66,7 +55,7 @@ export const SettingsSheet = () => {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon">
-          <Settings2 className="h-[1.5rem] w-[1.3rem] text-gray-300" />
+          <Settings2 className="h-[1.5rem] w-[1.3rem] text-gray-400" />
         </Button>
       </SheetTrigger>
       <SheetContent style={{ maxWidth: "75vw" }} className=" bg-black/60 ">
@@ -82,7 +71,7 @@ export const SettingsSheet = () => {
               <Input
                 type="text"
                 placeholder="Paste youtube link"
-                value={inputValue}
+                value={currentVideoUrl}
                 onChange={handleInputChange}
                 className="border border-gray-300 rounded px-2 py-1 w-[500px]"
               />

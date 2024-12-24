@@ -59,7 +59,7 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
   loadVideoFromUrl: () => {
     const videoParam = getUrlParam("video");
     if (videoParam) {
-      const [url, isPlaying, isVisible, volume] = videoParam.split(";");
+      const [url, isPlaying, isVisible, volume] = videoParam.split(",");
 
       set({
         currentVideoUrl: url || "",
@@ -74,17 +74,15 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
   syncToUrl: () => {
     const { currentVideoUrl, isPlaying, isVideoVisible, volume } = get();
     if (!currentVideoUrl) {
-      // updateUrlParams({ video: null });
+      updateUrlParams({ video: null });
     } else {
       const videoParam = [
         currentVideoUrl,
         isPlaying,
         isVideoVisible,
         volume,
-      ].join(";");
-  
+      ].join(",");
       updateUrlParams({ video: videoParam });
     }
-
   },
 }));
