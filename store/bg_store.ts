@@ -7,8 +7,10 @@ interface BackgroundState {
   loadBgFromUrl: () => void;
 }
 
+const defaultBg = 'rain-street'
+
 export const useBackgroundStore = create<BackgroundState>((set) => ({
-  currentBackground: "/bgs/rain-street.gif", // 默认背景
+  currentBackground: `/bgs/white-noise.gif`, // 默认背景
 
   setBackground: (bgName: string) => {
     const bgSrc = `/bgs/${bgName}.gif`
@@ -18,9 +20,12 @@ export const useBackgroundStore = create<BackgroundState>((set) => ({
 
   loadBgFromUrl: () => {
     const bgName = getUrlParam("background");
-    const bgSrc = `/bgs/${bgName}.gif`
     if (bgName) {
-      set({ currentBackground: bgSrc });
+      set({ currentBackground: `/bgs/${bgName}.gif` });
+      updateUrlParams({ background: bgName });
+    } else {
+      set({ currentBackground: `/bgs/${defaultBg}.gif` });
+      updateUrlParams({ background: defaultBg });
     }
   },
 }));
