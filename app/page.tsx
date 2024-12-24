@@ -49,6 +49,7 @@ export default function IndexPage() {
   const handleCancel = () => {
     const params = new URLSearchParams(window.location.search);
     updateUrlParams({sounds: null})
+    updateUrlParams({video: null})
     setShowDialog(false);
   };
 
