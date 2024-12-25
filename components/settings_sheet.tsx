@@ -15,10 +15,12 @@ import { BgControl } from "./BgControl/bg_control";
 import { useVideoStore } from "@/store/video_store";
 import { Input } from "./ui/input";
 import { Slider } from "@/components/ui/slider";
-// import { useDebounce } from "use-debounce";
-// import { useEffect, useState } from "react";
+import { useSettingsStore } from "@/store/settings_store";
 
 export const SettingsSheet = () => {
+
+  const { isSheetOpen, closeSheet, openSheet } = useSettingsStore();
+
   const {
     currentVideoUrl,
     setVideoUrl,
@@ -34,14 +36,6 @@ export const SettingsSheet = () => {
     // seekTo
   } = useVideoStore();
 
-  // const [inputValue, setInputValue] = useState("");
-
-  // const [debouncedValue] = useDebounce(inputValue, 500);
-
-  // useEffect(() => {
-  //   setVideoUrl(debouncedValue);
-  // }, [debouncedValue, setVideoUrl]);
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVideoUrl(e.target.value);
   };
@@ -51,11 +45,15 @@ export const SettingsSheet = () => {
     setVolume(newVolume);
   };
 
+  const changeOpen = () => {
+    isSheetOpen ? closeSheet() :openSheet()
+  }
+
   return (
-    <Sheet>
+    <Sheet open={isSheetOpen} onOpenChange={changeOpen}>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon">
-          <Settings2 className="h-[1.5rem] w-[1.3rem] text-gray-400" />
+          <Settings2 className="h-[1.5rem] w-[1.3rem] text-gray-300" />
         </Button>
       </SheetTrigger>
       <SheetContent style={{ maxWidth: "75vw" }} className=" bg-black/60 ">

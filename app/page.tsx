@@ -16,24 +16,31 @@ import {
 import { Button } from "@/components/ui/button";
 import { useVideoStore } from "@/store/video_store";
 import { updateUrlParams } from "@/lib/urlUtils";
+import { useSettingsStore } from "@/store/settings_store";
 
 export default function IndexPage() {
   const { currentBackground, loadBgFromUrl } = useBackgroundStore();
   const { loadVideoFromUrl } = useVideoStore();
   const { loadAudioFromUrl } = useAudioStore();
+  const { openSheet } = useSettingsStore();
 
   const [showDialog, setShowDialog] = useState(false);
-  const [audioStateLoaded, setAudioStateLoaded] = useState(false);
+  const params = new URLSearchParams(window.location.search);
+  const soundsParam = params.get("sounds");
+  const videoParam = params.get("video");
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const soundsParam = params.get("sounds");
-    const videoParam = params.get("video");
-
-    if ( (videoParam || soundsParam) && !audioStateLoaded) {
-      setShowDialog(true);
+    if (videoParam || soundsParam) {
+      setTimeout(() => {
+        setShowDialog(true);
+      }, 800);
     }
-  }, [audioStateLoaded]);
+     else {
+      setTimeout(() => {
+        openSheet();
+      }, 1500) 
+    }
+  }, []);
 
   useEffect(() => {
     loadBgFromUrl();
@@ -41,17 +48,27 @@ export default function IndexPage() {
 
   const handleConfirm = () => {
     setShowDialog(false);
-    setAudioStateLoaded(true);
     loadAudioFromUrl(); // 加载音频状态
-    loadVideoFromUrl()
+    loadVideoFromUrl();
   };
 
   const handleCancel = () => {
     const params = new URLSearchParams(window.location.search);
-    updateUrlParams({sounds: null})
-    updateUrlParams({video: null})
+    updateUrlParams({ sounds: null });
+    updateUrlParams({ video: null });
     setShowDialog(false);
+    setTimeout(() => {
+      openSheet();
+    }, 500);
   };
+
+  const changeOpen = () => {
+    if (showDialog) {
+      handleCancel()
+    } else {
+      setShowDialog(true)
+    }
+  }
 
   return (
     <div className="w-screen h-screen overflow-hidden relative">
@@ -64,7 +81,7 @@ export default function IndexPage() {
       <div className={styles.crtLines}></div>
       <div className={styles.darken}></div>
       <div className={styles.vignette}></div>
-      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+      <Dialog open={showDialog} onOpenChange={changeOpen}>
         <DialogContent>
           <DialogTitle>Continue playing?</DialogTitle>
           <DialogFooter>
