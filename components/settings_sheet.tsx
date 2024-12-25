@@ -46,7 +46,11 @@ export const SettingsSheet = () => {
   };
 
   const changeOpen = () => {
-    isSheetOpen ? closeSheet() :openSheet()
+    if (isSheetOpen) {
+      closeSheet()
+    } else {
+      openSheet()
+    }
   }
 
   return (

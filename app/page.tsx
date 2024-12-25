@@ -7,11 +7,9 @@ import { useAudioStore } from "@/store/audio_store";
 import { useEffect, useState } from "react";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogFooter,
   DialogTitle,
-  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useVideoStore } from "@/store/video_store";
@@ -53,7 +51,6 @@ export default function IndexPage() {
   };
 
   const handleCancel = () => {
-    const params = new URLSearchParams(window.location.search);
     updateUrlParams({ sounds: null });
     updateUrlParams({ video: null });
     setShowDialog(false);

@@ -51,7 +51,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 <BottomControls />
               </div>
             </OpeningEffect>
-            {/* <TailwindIndicator /> */}
+            <TailwindIndicator />
           </ThemeProvider>
         </body>
       </html>
