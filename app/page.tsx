@@ -21,13 +21,12 @@ export default function IndexPage() {
   const { loadVideoFromUrl } = useVideoStore();
   const { loadAudioFromUrl } = useAudioStore();
   const { openSheet } = useSettingsStore();
-
   const [showDialog, setShowDialog] = useState(false);
-  const params = new URLSearchParams(window.location.search);
-  const soundsParam = params.get("sounds");
-  const videoParam = params.get("video");
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const soundsParam = params.get("sounds");
+    const videoParam = params.get("video");
     if (videoParam || soundsParam) {
       setTimeout(() => {
         setShowDialog(true);
