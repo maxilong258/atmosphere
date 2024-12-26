@@ -44,7 +44,7 @@ export const useAudioStore = create<AudioState>()(
           // 如果音频正在播放，暂停音频并移除监听器
           currentAudio.audioRef?.pause();
           currentAudio.audioRef?.removeEventListener("timeupdate", currentAudio.timeUpdateListener!);
-
+          currentAudio.audioRef = null
           set((state) => ({
             audios: {
               ...state.audios,
@@ -52,7 +52,7 @@ export const useAudioStore = create<AudioState>()(
             },
           }));
         } else {
-          let audioRef = currentAudio?.audioRef!;
+          let audioRef = currentAudio?.audioRef;
           if (!audioRef) {
             audioRef = new Audio(soundUrl);
             audioRef.volume = currentAudio?.volume || 1;

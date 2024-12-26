@@ -23,10 +23,12 @@ export default function IndexPage() {
   const { audios, cleanAudios, loadAudioFromUrl } = useAudioStore();
   const { openSheet } = useSettingsStore();
   const [showDialog, setShowDialog] = useState(false);
+  const [isInit, setIsInit] = useState(true)
 
   useEffect(() => {
-    setTimeout(() => {
-      console.log(currentVideoUrl, '1231231231')
+    if (!isInit) return;
+    const timeout = setTimeout(() => {
+      setIsInit(false)
       const params = new URLSearchParams(window.location.search);
       const soundsParam =
         params.get("sounds") ||
@@ -39,7 +41,8 @@ export default function IndexPage() {
         openSheet();
       }
     }, 2000);
-  }, [openSheet]);
+    return () => clearTimeout(timeout); // 清理定时器
+  }, [audios, currentVideoUrl, openSheet]);
 
   useEffect(() => {
     loadBgFromUrl();
