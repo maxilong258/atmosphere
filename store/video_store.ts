@@ -91,7 +91,6 @@ export const useVideoStore = create<VideoStore>()(
           // 如果 URL 中没有视频参数，从 localStorage 恢复状态
           const { currentVideoUrl, isPlaying, isVideoVisible, volume } = get();
           if (currentVideoUrl) {
-            set({ checkVideoPlay: true });
             updateUrlParams({
               video: [
                 currentVideoUrl,
@@ -101,6 +100,7 @@ export const useVideoStore = create<VideoStore>()(
               ].join(","),
             });
           }
+          set({ checkVideoPlay: true });
         }
       },
 
