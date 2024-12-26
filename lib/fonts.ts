@@ -1,4 +1,4 @@
-import { VT323, Cousine } from "next/font/google"
+import { Cousine } from "next/font/google"
 
 export const fontSans = Cousine({
   weight: '400',

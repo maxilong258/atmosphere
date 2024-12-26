@@ -45,7 +45,7 @@ export default function IndexPage() {
 
     }, 2000);
     return () => clearTimeout(timeout); // 清理定时器
-  }, [audios, currentVideoUrl, openSheet]);
+  }, [audios, currentVideoUrl, openSheet, isInit, setChackVideoDone]);
 
   useEffect(() => {
     loadBgFromUrl();
