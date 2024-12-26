@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { useAudioStore } from "@/store/audio_store"; // 导入 store
+import Image from 'next/image'
 
 interface AudioControlProps {
   soundName: string; // 音频文件的 URL
@@ -53,9 +54,11 @@ export const AudioControl = ({
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <img
+              <Image
                 src={currentAudio.isPlaying ? iconSrc : iconGraySrc}
                 alt={iconAlt}
+                width={100}
+                height={100}
               />
             </TooltipTrigger>
             <TooltipContent>

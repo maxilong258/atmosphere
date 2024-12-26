@@ -4,6 +4,7 @@ import { useVideoStore } from "@/store/video_store";
 export default function BackgroundPlayer() {
   const {
     currentVideoUrl,
+    checkVideoPlay,
     isVideoVisible,
     volume,
     isPlaying,
@@ -66,7 +67,7 @@ export default function BackgroundPlayer() {
         isVideoVisible ? "opacity-100 z-0" : "opacity-0 -z-10"
       }`}
     >
-      {currentVideoUrl && (
+      {checkVideoPlay && currentVideoUrl && (
         <div className="relative w-full h-screen overflow-hidden bg-black">
           <iframe
             ref={iframeRef}
@@ -79,14 +80,14 @@ export default function BackgroundPlayer() {
             title="YouTube Video"
             allow="autoplay; fullscreen"
             allowFullScreen
-            style={{
-              width: "177.78vh", // 16:9 的比例高度
-              height: "100vh", // 高度占满屏幕
-              transform: "translateX(-50%)", // 横向居中裁剪
-              position: "absolute",
-              left: "50%",
-              top: "0",
-            }}
+            // style={{
+            //   width: "177.78vh", // 16:9 的比例高度
+            //   height: "100vh", // 高度占满屏幕
+            //   transform: "translateX(-50%)", // 横向居中裁剪
+            //   position: "absolute",
+            //   left: "50%",
+            //   top: "0",
+            // }}
           ></iframe>
         </div>
       )}

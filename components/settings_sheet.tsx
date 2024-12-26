@@ -18,7 +18,6 @@ import { Slider } from "@/components/ui/slider";
 import { useSettingsStore } from "@/store/settings_store";
 
 export const SettingsSheet = () => {
-
   const { isSheetOpen, closeSheet, openSheet } = useSettingsStore();
 
   const {
@@ -47,17 +46,19 @@ export const SettingsSheet = () => {
 
   const changeOpen = () => {
     if (isSheetOpen) {
-      closeSheet()
+      closeSheet();
     } else {
-      openSheet()
+      openSheet();
     }
-  }
+  };
 
   return (
     <Sheet open={isSheetOpen} onOpenChange={changeOpen}>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon">
-          <Settings2 className="h-[1.5rem] w-[1.3rem] text-gray-300" />
+          <Settings2
+            className="h-[1.5rem] w-[1.3rem] text-gray-300"
+          />
         </Button>
       </SheetTrigger>
       <SheetContent style={{ maxWidth: "75vw" }} className=" bg-black/60 ">

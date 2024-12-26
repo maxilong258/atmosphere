@@ -1,5 +1,6 @@
 import { useBackgroundStore } from "@/store/bg_store";
 import { Button } from "@/components/ui/button";
+import Image from 'next/image'
 
 export const BgControl = ({ bgName }: { bgName: string }) => {
   const { currentBackground, setBackground } = useBackgroundStore();
@@ -16,10 +17,12 @@ export const BgControl = ({ bgName }: { bgName: string }) => {
         style={{ width: "90px", height: "90px" }}
         onClick={() => setBackground(bgName)}
       >
-        <img
+        <Image
           className="w-full h-full object-cover"
           src={bgUrl}
           alt="background"
+          width={100}
+          height={100}
         />
       </Button>
     </span>

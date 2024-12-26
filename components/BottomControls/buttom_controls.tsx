@@ -1,9 +1,9 @@
 "use client";
 
 import { useAudioStore } from "@/store/audio_store";
-
 import { useVideoStore } from "@/store/video_store";
 import { TvMinimalPlay } from "lucide-react";
+import Image from 'next/image'
 
 export const BottomControls = () => {
   const { audios } = useAudioStore();
@@ -21,11 +21,13 @@ export const BottomControls = () => {
         {currentAudio.map((item) => {
           const iconSrc = `/icons/${item.soundName}.png`;
           return (
-            <img
+            <Image
               key={iconSrc}
               src={iconSrc}
               alt="Currently Playing"
               className="mr-5 w-7 h-7"
+              width={100}
+              height={100}
             />
           );
         })}

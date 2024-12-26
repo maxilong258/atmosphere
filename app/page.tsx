@@ -3,7 +3,7 @@
 import { useBackgroundStore } from "@/store/bg_store";
 import styles from "./bg.module.css";
 import BackgroundPlayer from "@/components/VideoPlayer/video_player";
-import { useAudioStore } from "@/store/audio_store";
+import { getPlayingAudios, useAudioStore } from "@/store/audio_store";
 import { useEffect, useState } from "react";
 import {
   Dialog,
@@ -15,29 +15,31 @@ import { Button } from "@/components/ui/button";
 import { useVideoStore } from "@/store/video_store";
 import { updateUrlParams } from "@/lib/urlUtils";
 import { useSettingsStore } from "@/store/settings_store";
+import Image from "next/image";
 
 export default function IndexPage() {
   const { currentBackground, loadBgFromUrl } = useBackgroundStore();
-  const { loadVideoFromUrl } = useVideoStore();
-  const { loadAudioFromUrl } = useAudioStore();
+  const { currentVideoUrl, cleanVideo, loadVideoFromUrl } = useVideoStore();
+  const { audios, cleanAudios, loadAudioFromUrl } = useAudioStore();
   const { openSheet } = useSettingsStore();
   const [showDialog, setShowDialog] = useState(false);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const soundsParam = params.get("sounds");
-    const videoParam = params.get("video");
-    if (videoParam || soundsParam) {
-      setTimeout(() => {
+    setTimeout(() => {
+      console.log(currentVideoUrl, '1231231231')
+      const params = new URLSearchParams(window.location.search);
+      const soundsParam =
+        params.get("sounds") ||
+        Object.keys(getPlayingAudios(audios)).length !== 0;
+      const videoParam =
+        params.get("video") || currentVideoUrl
+      if (videoParam || soundsParam) {
         setShowDialog(true);
-      }, 800);
-    }
-     else {
-      setTimeout(() => {
+      } else {
         openSheet();
-      }, 1500) 
-    }
-  }, []);
+      }
+    }, 2000);
+  }, [openSheet]);
 
   useEffect(() => {
     loadBgFromUrl();
@@ -51,7 +53,9 @@ export default function IndexPage() {
 
   const handleCancel = () => {
     updateUrlParams({ sounds: null });
+    cleanAudios();
     updateUrlParams({ video: null });
+    cleanVideo();
     setShowDialog(false);
     setTimeout(() => {
       openSheet();
@@ -60,18 +64,20 @@ export default function IndexPage() {
 
   const changeOpen = () => {
     if (showDialog) {
-      handleCancel()
+      handleCancel();
     } else {
-      setShowDialog(true)
+      setShowDialog(true);
     }
-  }
+  };
 
   return (
     <div className="w-screen h-screen overflow-hidden relative">
       <BackgroundPlayer />
-      <img
+      <Image
         className="w-full h-full object-cover"
-        src={currentBackground}
+        src={currentBackground ?? "/bgs/white-noise.gif"}
+        width={"100"}
+        height={"100"}
         alt=""
       />
       <div className={styles.crtLines}></div>

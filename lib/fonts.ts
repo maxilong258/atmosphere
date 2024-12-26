@@ -1,13 +1,9 @@
-import { JetBrains_Mono as FontMono, Inter as FontSans, /* Geist, Geist_Mono */  } from "next/font/google"
+import { VT323, Cousine } from "next/font/google"
 
-export const fontSans = FontSans({
+export const fontSans = Cousine({
+  weight: '400',
   subsets: ["latin"],
   variable: "--font-sans",
-})
-
-export const fontMono = FontMono({
-  subsets: ["latin"],
-  variable: "--font-mono",
 })
 
 // const geistSans = Geist({
