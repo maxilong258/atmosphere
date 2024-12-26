@@ -7,6 +7,7 @@ interface VideoStore {
   setVideoUrl: (url: string) => void;
 
   checkVideoPlay: boolean;
+  setChackVideoDone: () => void
 
   isVideoVisible: boolean;
   toggleVideoVisibility: () => void;
@@ -32,10 +33,14 @@ export const useVideoStore = create<VideoStore>()(
   persist(
     (set, get) => ({
       currentVideoUrl: "",
-      checkVideoPlay: false,
       setVideoUrl: (url) => {
         set({ currentVideoUrl: url });
         get().syncToUrl();
+      },
+
+      checkVideoPlay: false,
+      setChackVideoDone: () => {
+        set({ checkVideoPlay: true });
       },
 
       isVideoVisible: true,

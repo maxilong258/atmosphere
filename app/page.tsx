@@ -19,7 +19,7 @@ import Image from "next/image";
 
 export default function IndexPage() {
   const { currentBackground, loadBgFromUrl } = useBackgroundStore();
-  const { currentVideoUrl, cleanVideo, loadVideoFromUrl } = useVideoStore();
+  const { currentVideoUrl, cleanVideo, loadVideoFromUrl, setChackVideoDone } = useVideoStore();
   const { audios, cleanAudios, loadAudioFromUrl } = useAudioStore();
   const { openSheet } = useSettingsStore();
   const [showDialog, setShowDialog] = useState(false);
@@ -29,17 +29,20 @@ export default function IndexPage() {
     if (!isInit) return;
     const timeout = setTimeout(() => {
       setIsInit(false)
+
       const params = new URLSearchParams(window.location.search);
       const soundsParam =
         params.get("sounds") ||
         Object.keys(getPlayingAudios(audios)).length !== 0;
-      const videoParam =
-        params.get("video") || currentVideoUrl
+      const videoParam = params.get("video") || currentVideoUrl
+
       if (videoParam || soundsParam) {
         setShowDialog(true);
       } else {
+        setChackVideoDone()
         openSheet();
       }
+
     }, 2000);
     return () => clearTimeout(timeout); // 清理定时器
   }, [audios, currentVideoUrl, openSheet]);
@@ -59,6 +62,7 @@ export default function IndexPage() {
     cleanAudios();
     updateUrlParams({ video: null });
     cleanVideo();
+    setChackVideoDone();
     setShowDialog(false);
     setTimeout(() => {
       openSheet();

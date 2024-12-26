@@ -115,8 +115,9 @@ export const useAudioStore = create<AudioState>()(
 
         // 更新 URL 参数
         const playingAudios =  getPlayingAudios(get().audios)
-
-        updateUrlParams({ sounds: playingAudios });
+        if (playingAudios) {
+          updateUrlParams({ sounds: playingAudios });
+        }
       },
 
       cleanAudios: () => {
@@ -208,9 +209,10 @@ export const useAudioStore = create<AudioState>()(
             }
           });
 
-          const playingAudios =  getPlayingAudios(get().audios)
-
-          updateUrlParams({ sounds: playingAudios });
+          const playingAudios = getPlayingAudios(get().audios)
+          if (playingAudios) {
+            updateUrlParams({ sounds: playingAudios });
+          }
         }
       },
     }),
