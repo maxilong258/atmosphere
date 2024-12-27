@@ -119,6 +119,15 @@ export const SettingsSheet = () => {
             <span className="text-2xl text-white font-bold m-3 block">
               Nature
             </span>
+            <AudioControl soundName="forest" />
+            <AudioControl soundName="mountain-river" />
+            <AudioControl soundName="beach" />
+            <AudioControl soundName="countryside-morning" />
+            <AudioControl soundName="wind" />
+            <AudioControl soundName="howling-wind" />
+            <AudioControl soundName="night" />
+            <AudioControl soundName="water-flow" />
+            <AudioControl soundName="bonfire" />
             <AudioControl soundName="light-rain" />
             <AudioControl soundName="heavy-rain" />
             <AudioControl soundName="thunder" />
@@ -135,6 +144,7 @@ export const SettingsSheet = () => {
 
             <BgControl bgName="rain-street" />
             <BgControl bgName="retrowave" />
+            <BgControl bgName="cruise" />
           </SheetDescription>
         </SheetHeader>
       </SheetContent>
