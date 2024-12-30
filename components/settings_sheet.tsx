@@ -61,7 +61,7 @@ export const SettingsSheet = () => {
           />
         </Button>
       </SheetTrigger>
-      <SheetContent style={{ maxWidth: "75vw" }} className=" bg-black/60 ">
+      <SheetContent style={{ maxWidth: "75vw" }} className="bg-black/60 overflow-scroll">
         <SheetHeader>
           <SheetTitle></SheetTitle>
 
@@ -128,20 +128,61 @@ export const SettingsSheet = () => {
             <AudioControl soundName="night" />
             <AudioControl soundName="water-flow" />
             <AudioControl soundName="bonfire" />
+            <AudioControl soundName="wind-in-trees" />
+            <AudioControl soundName="cave" />
+            <AudioControl soundName="waterfall" />
+            <AudioControl soundName="deep-sea" />
+
+            <span className="text-2xl text-white font-bold m-3 block">
+              Rain
+            </span>
             <AudioControl soundName="light-rain" />
             <AudioControl soundName="heavy-rain" />
             <AudioControl soundName="thunder" />
             <AudioControl soundName="rain-on-window" />
+            <AudioControl soundName="rain-tent" />
+            <AudioControl soundName="umbrella" />
+            <AudioControl soundName="rain-on-leaves" />
+
+            <span className="text-2xl text-white font-bold m-3 block">
+              Animals
+            </span>
+            <AudioControl soundName="birds" />
+            <AudioControl soundName="seagulls" />
+            <AudioControl soundName="crickets" />
+            <AudioControl soundName="owl" />
+            <AudioControl soundName="frog" />
+            <AudioControl soundName="cat-purring" />
+            <AudioControl soundName="dog-barking" />
+            <AudioControl soundName="wolf" />
+            <AudioControl soundName="whale" />
+
+            <span className="text-2xl text-white font-bold m-3 block">
+              Room
+            </span>
+            <AudioControl soundName="keyboard" />
+            <AudioControl soundName="typewriter" />
+            <AudioControl soundName="clock" />
+            <AudioControl soundName="wind-chimes" />
+            <AudioControl soundName="ceiling-fan" />
 
             <span className="text-2xl text-white font-bold m-3 block">
               City
             </span>
+            <AudioControl soundName="cafe" />
+            <AudioControl soundName="busy-street" />
+            <AudioControl soundName="rowing-boat" />
+            <AudioControl soundName="playground" />
+            <AudioControl soundName="airport" />
             <AudioControl soundName="train" />
+
+
 
             <span className="text-2xl text-white font-bold m-3 block">
               Background
             </span>
 
+            <BgControl bgName="rain-on-window" />
             <BgControl bgName="rain-street" />
             <BgControl bgName="retrowave" />
             <BgControl bgName="cruise" />
