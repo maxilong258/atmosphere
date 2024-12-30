@@ -30,7 +30,7 @@ interface VideoStore {
 }
 
 export const useVideoStore = create<VideoStore>()(
-  persist(
+  // persist(
     (set, get) => ({
       currentVideoUrl: "",
       setVideoUrl: (url) => {
@@ -89,18 +89,18 @@ export const useVideoStore = create<VideoStore>()(
           });
         } else {
           // 如果 URL 中没有视频参数，从 localStorage 恢复状态
-          const { currentVideoUrl, isPlaying, isVideoVisible, volume } = get();
-          if (currentVideoUrl) {
-            updateUrlParams({
-              video: [
-                currentVideoUrl,
-                isPlaying,
-                isVideoVisible,
-                volume,
-              ].join(","),
-            });
-          }
-          set({ checkVideoPlay: true });
+          // const { currentVideoUrl, isPlaying, isVideoVisible, volume } = get();
+          // if (currentVideoUrl) {
+          //   updateUrlParams({
+          //     video: [
+          //       currentVideoUrl,
+          //       isPlaying,
+          //       isVideoVisible,
+          //       volume,
+          //     ].join(","),
+          //   });
+          // }
+          // set({ checkVideoPlay: true });
         }
       },
 
@@ -120,16 +120,16 @@ export const useVideoStore = create<VideoStore>()(
         }
       },
     }),
-    {
-      name: "video-store", // localStorage 的 key
-      partialize: (state) =>
-        // 仅存储以下状态
-        ({
-          currentVideoUrl: state.currentVideoUrl,
-          isVideoVisible: state.isVideoVisible,
-          volume: state.volume,
-          isPlaying: state.isPlaying,
-        }),
-    }
-  )
+  //   {
+  //     name: "video-store", // localStorage 的 key
+  //     partialize: (state) =>
+  //       // 仅存储以下状态
+  //       ({
+  //         currentVideoUrl: state.currentVideoUrl,
+  //         isVideoVisible: state.isVideoVisible,
+  //         volume: state.volume,
+  //         isPlaying: state.isPlaying,
+  //       }),
+  //   }
+  // )
 );

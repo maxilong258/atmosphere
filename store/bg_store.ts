@@ -11,7 +11,7 @@ interface BackgroundState {
 const defaultBg = "rain-street";
 
 export const useBackgroundStore = create<BackgroundState>()(
-  persist(
+  // persist(
     (set, get) => ({
       currentBackground: null,
       setBackground: (bgName: string) => {
@@ -27,18 +27,18 @@ export const useBackgroundStore = create<BackgroundState>()(
           set({ currentBackground: `/bgs/${bgName}.gif` });
           updateUrlParams({ background: bgName });
         } else if (storedbg) {
-          const bgNameFromStorage = storedbg.split("/").pop()?.replace(".gif", "");
-          updateUrlParams({ background: bgNameFromStorage || defaultBg });
+          // const bgNameFromStorage = storedbg.split("/").pop()?.replace(".gif", "");
+          // updateUrlParams({ background: bgNameFromStorage || defaultBg });
         } else {
           set({ currentBackground: `/bgs/${defaultBg}.gif` });
           updateUrlParams({ background: defaultBg });
         }
       },
     }),
-    {
-      name: "background-store",
-      partialize: (state) => ({ currentBackground: state.currentBackground }), // 只存储当前背景
-    }
-  )
+  //   {
+  //     name: "background-store",
+  //     partialize: (state) => ({ currentBackground: state.currentBackground }), // 只存储当前背景
+  //   }
+  // )
 );
 

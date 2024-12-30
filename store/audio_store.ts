@@ -31,7 +31,7 @@ export const getPlayingAudios = (audios: Record<string, Audio>) => {
 } 
 
 export const useAudioStore = create<AudioState>()(
-  persist(
+  // persist(
     (set, get) => ({
       audios: {},
 
@@ -177,48 +177,48 @@ export const useAudioStore = create<AudioState>()(
             console.error("Failed to load audio state from URL:", error);
           }
         } else {
-          // 如果 URL 中没有参数，从 localStorage 加载状态
-          const storedAudios = get().audios;
+          // // 如果 URL 中没有参数，从 localStorage 加载状态
+          // const storedAudios = get().audios;
           
-          Object.entries(storedAudios).forEach(([soundUrl, audio]) => {
-            if (audio.isPlaying) {
-              const audioRef = new Audio(soundUrl);
-              audioRef.volume = audio.volume;
-              audioRef.loop = true;
+          // Object.entries(storedAudios).forEach(([soundUrl, audio]) => {
+          //   if (audio.isPlaying) {
+          //     const audioRef = new Audio(soundUrl);
+          //     audioRef.volume = audio.volume;
+          //     audioRef.loop = true;
 
-              const timeUpdateListener = () => {
-                if (audioRef.currentTime >= audioRef.duration - 1) {
-                  audioRef.currentTime = 0;
-                }
-              };
+          //     const timeUpdateListener = () => {
+          //       if (audioRef.currentTime >= audioRef.duration - 1) {
+          //         audioRef.currentTime = 0;
+          //       }
+          //     };
 
-              audioRef.addEventListener("timeupdate", timeUpdateListener);
+          //     audioRef.addEventListener("timeupdate", timeUpdateListener);
 
-              audioRef.play();
+          //     audioRef.play();
 
-              set((state) => ({
-                audios: {
-                  ...state.audios,
-                  [soundUrl]: {
-                    ...audio,
-                    audioRef,
-                    timeUpdateListener,
-                  },
-                },
-              }));
-            }
-          });
+          //     set((state) => ({
+          //       audios: {
+          //         ...state.audios,
+          //         [soundUrl]: {
+          //           ...audio,
+          //           audioRef,
+          //           timeUpdateListener,
+          //         },
+          //       },
+          //     }));
+          //   }
+          // });
 
-          const playingAudios = getPlayingAudios(get().audios)
-          if (playingAudios) {
-            updateUrlParams({ sounds: playingAudios });
-          }
+          // const playingAudios = getPlayingAudios(get().audios)
+          // if (playingAudios) {
+          //   updateUrlParams({ sounds: playingAudios });
+          // }
         }
       },
     }),
-    {
-      name: "audio-store",
-      partialize: (state) => ({ audios: state.audios }), // 只存储 audios 状态
-    }
-  )
+  //   {
+  //     name: "audio-store",
+  //     partialize: (state) => ({ audios: state.audios }), // 只存储 audios 状态
+  //   }
+  // )
 );
