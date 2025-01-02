@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { getPlayingAudios, useAudioStore } from "@/store/audio_store";
 import { useVideoStore } from "@/store/video_store";
 import {
   Shuffle,
-  TvMinimalPlay,
+  // TvMinimalPlay,
   Rewind,
   FastForward,
   CircleX,
 } from "lucide-react";
-import Image from "next/image";
+// import Image from "next/image";
 import { SettingsSheet } from "@/components/settings_sheet";
 import { Button } from "../ui/button";
 import { useBackgroundStore } from "@/store/bg_store";
@@ -22,7 +22,9 @@ import FullScreenToggle from "../full_screen_toggle";
 
 export const BottomControls = () => {
   const { audios, cleanAudios } = useAudioStore();
-  const { currentVideoUrl, isPlaying, cleanVideo, loadVideoFromUrl } =
+  const { currentVideoUrl, 
+    // isPlaying, 
+    cleanVideo, loadVideoFromUrl } =
     useVideoStore();
   const { loadAudioFromUrl } = useAudioStore();
   const { loadBgFromUrl, setBackground } = useBackgroundStore();
@@ -128,7 +130,7 @@ export const BottomControls = () => {
     };
 
     // 监听键盘按键事件
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = () => {
       handleInteraction();
     };
 
@@ -146,7 +148,7 @@ export const BottomControls = () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("click", handleClick);
     };
-  }, [isInited]);
+  }, [isInited, audios, currentVideoUrl, handleShuffle, loadAudioFromUrl, loadBgFromUrl, loadAudioFromUrl, loadVideoFromUrl, setInitDone]);
 
   return (
     <div className="z-40 absolute bottom-0 ">

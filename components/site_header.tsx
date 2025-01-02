@@ -4,7 +4,7 @@ import FullScreenToggle from "@/components/full_screen_toggle";
 import { useSettingsStore } from "@/store/settings_store";
 
 export function SiteHeader() {
-  const { isInited, setInitDone } = useSettingsStore();
+  const { isInited } = useSettingsStore();
 
   return (
     <header className="sticky top-0 z-40 w-full">

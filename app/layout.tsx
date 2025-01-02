@@ -5,7 +5,6 @@ import { fontSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "next-themes";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
-import { SiteHeader } from "@/components/site_header";
 import { OpeningEffect } from "@/components/OpeningEffect/opening_effect";
 import { BottomControls } from "@/components/BottomControls/buttom_controls";
 
