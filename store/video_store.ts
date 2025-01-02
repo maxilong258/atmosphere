@@ -6,9 +6,6 @@ interface VideoStore {
   currentVideoUrl: string;
   setVideoUrl: (url: string) => void;
 
-  checkVideoPlay: boolean;
-  setChackVideoDone: () => void
-
   isVideoVisible: boolean;
   toggleVideoVisibility: () => void;
 
@@ -36,11 +33,6 @@ export const useVideoStore = create<VideoStore>()(
       setVideoUrl: (url) => {
         set({ currentVideoUrl: url });
         get().syncToUrl();
-      },
-
-      checkVideoPlay: false,
-      setChackVideoDone: () => {
-        set({ checkVideoPlay: true });
       },
 
       isVideoVisible: true,
@@ -85,7 +77,6 @@ export const useVideoStore = create<VideoStore>()(
             isPlaying: isPlaying === "true",
             isVideoVisible: isVisible === "true",
             volume: volume ? parseInt(volume, 10) : 100,
-            checkVideoPlay: true
           });
         } else {
           // 如果 URL 中没有视频参数，从 localStorage 恢复状态
@@ -100,7 +91,6 @@ export const useVideoStore = create<VideoStore>()(
           //     ].join(","),
           //   });
           // }
-          // set({ checkVideoPlay: true });
         }
       },
 

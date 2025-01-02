@@ -121,9 +121,11 @@ export const useAudioStore = create<AudioState>()(
       },
 
       cleanAudios: () => {
-        set(() => ({
+        const { audios, toggleAudio } = get()
+        Object.keys(audios).forEach(key => toggleAudio(key))
+        set({
           audios: {}
-        }))
+        })
       },
 
       loadAudioFromUrl: () => {

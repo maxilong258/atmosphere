@@ -4,7 +4,6 @@ import { useVideoStore } from "@/store/video_store";
 export default function BackgroundPlayer() {
   const {
     currentVideoUrl,
-    checkVideoPlay,
     isVideoVisible,
     volume,
     isPlaying,
@@ -67,7 +66,7 @@ export default function BackgroundPlayer() {
         isVideoVisible ? "opacity-100 z-0" : "opacity-0 -z-10"
       }`}
     >
-      {checkVideoPlay && currentVideoUrl && (
+      {currentVideoUrl && (
         <div className="relative w-full h-screen overflow-hidden bg-black">
           <iframe
             ref={iframeRef}
