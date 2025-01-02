@@ -8,7 +8,7 @@ import {
   TvMinimalPlay,
   Rewind,
   FastForward,
-  Eraser,
+  CircleX,
 } from "lucide-react";
 import Image from "next/image";
 import { SettingsSheet } from "@/components/settings_sheet";
@@ -18,6 +18,7 @@ import TypingEffect from "../TypingEffect/typing_effect";
 import { useSettingsStore } from "@/store/settings_store";
 import { updateUrlParams } from "@/lib/urlUtils";
 import { PLAY_LIST } from "@/config/playlist";
+import FullScreenToggle from "../full_screen_toggle";
 
 export const BottomControls = () => {
   const { audios, cleanAudios } = useAudioStore();
@@ -27,12 +28,20 @@ export const BottomControls = () => {
   const { loadBgFromUrl, setBackground } = useBackgroundStore();
   const { isInited, setInitDone } = useSettingsStore();
 
-  // 找到当前正在播放的音频
-  const currentAudio = Object.values(audios).filter((audio) => audio.isPlaying);
+  const whiteNoiseAudio = new Audio("/sounds/aaa-white-noise.mp3");
+  whiteNoiseAudio.preload = "auto"; // 确保音频准备好可以立即播放
+  whiteNoiseAudio.volume = 0.12;
 
   const handleShuffle = () => {
-    handleClear()
-    setBackground("white-noise");
+    handleClear();
+    const randomInt = Math.floor(Math.random() * 10);
+    setBackground(`loading${randomInt}`);
+    whiteNoiseAudio.currentTime = 0;
+    whiteNoiseAudio.play().then(() => {
+      setTimeout(() => {
+        whiteNoiseAudio.pause();
+      }, 200);
+    });
     setTimeout(() => {
       const randomUrl = PLAY_LIST[Math.floor(Math.random() * PLAY_LIST.length)];
       window.history.pushState({}, "", randomUrl);
@@ -51,10 +60,17 @@ export const BottomControls = () => {
 
   const handlePrev = () => {
     const searchStr = window.location.search;
-    handleClear()
-    setBackground("white-noise");
+    handleClear();
+    const randomInt = Math.floor(Math.random() * 10);
+    setBackground(`loading${randomInt}`);
+    whiteNoiseAudio.currentTime = 0;
+    whiteNoiseAudio.play().then(() => {
+      setTimeout(() => {
+        whiteNoiseAudio.pause();
+      }, 200);
+    });
     setTimeout(() => {
-      const index = PLAY_LIST.findIndex((item) => item === searchStr)
+      const index = PLAY_LIST.findIndex((item) => item === searchStr);
       if (index > 0 && index < PLAY_LIST.length) {
         window.history.pushState({}, "", PLAY_LIST[index - 1]);
       } else {
@@ -64,14 +80,21 @@ export const BottomControls = () => {
       loadAudioFromUrl();
       loadBgFromUrl();
     }, 200);
-  }
+  };
 
   const handleNext = () => {
     const searchStr = window.location.search;
-    handleClear()
-    setBackground("white-noise");
+    handleClear();
+    const randomInt = Math.floor(Math.random() * 10);
+    setBackground(`loading${randomInt}`);
+    whiteNoiseAudio.currentTime = 0;
+    whiteNoiseAudio.play().then(() => {
+      setTimeout(() => {
+        whiteNoiseAudio.pause();
+      }, 200);
+    });
     setTimeout(() => {
-      const index = PLAY_LIST.findIndex((item) => item === searchStr)
+      const index = PLAY_LIST.findIndex((item) => item === searchStr);
       if (index >= 0 && index < PLAY_LIST.length - 1) {
         window.history.pushState({}, "", PLAY_LIST[index + 1]);
       } else {
@@ -81,7 +104,7 @@ export const BottomControls = () => {
       loadAudioFromUrl();
       loadBgFromUrl();
     }, 200);
-  }
+  };
 
   useEffect(() => {
     loadBgFromUrl();
@@ -133,39 +156,89 @@ export const BottomControls = () => {
         </div>
       ) : (
         <>
-          <div className="flex m-6 mb-0 space-x-1">
-            <SettingsSheet />
-            <Button variant="ghost" size="icon" onClick={handleClear}>
-              <Eraser className="h-[1.5rem] w-[1.3rem] text-gray-300" />
-            </Button>
-            <Button variant="ghost" size="icon" onClick={handleShuffle}>
-              <Shuffle className="h-[1.5rem] w-[1.3rem] text-gray-300" />
-            </Button>
-            <Button variant="ghost" size="icon" onClick={handlePrev}>
-              <Rewind className="h-[1.5rem] w-[1.3rem] text-gray-300" />
-            </Button>
-            <Button variant="ghost" size="icon" onClick={handleNext}>
-              <FastForward className="h-[1.5rem] w-[1.3rem] text-gray-300" />
-            </Button>
+          <div className="flex justify-between w-screen">
+            <div className="flex m-6 mb-0 space-x-1">
+              <SettingsSheet />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleClear}
+              >
+                <CircleX
+                  style={{filter: 'drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)'}} 
+                  color="#fbfbf3"
+                  strokeWidth={2.5}
+                  className="h-[1.5rem] w-[1.3rem]"
+                />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleShuffle}
+              >
+                <Shuffle
+                  style={{filter: 'drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)'}} 
+                  color="#fbfbf3"
+                  strokeWidth={2.5}
+                  className="h-[1.5rem] w-[1.3rem]"
+                />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handlePrev}
+              >
+                <Rewind
+                  style={{filter: 'drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)'}} 
+                  color="#fbfbf3"
+                  strokeWidth={2.5}
+                  className="h-[1.5rem] w-[1.3rem]"
+                />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleNext}
+              >
+                <FastForward
+                  style={{filter: 'drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)'}} 
+                  color="#fbfbf3"
+                  strokeWidth={2.5}
+                  className="h-[1.5rem] w-[1.3rem]"
+                />
+              </Button>
+            </div>
+
+            <div className="m-6 mb-0">
+              <FullScreenToggle />
+            </div>
           </div>
 
           <div className="flex m-8 mt-3">
-            {currentVideoUrl && isPlaying && (
-              <TvMinimalPlay strokeWidth={1.2} className="mr-5 w-6 h-6" />
+            {/* {currentVideoUrl && isPlaying && (
+              <TvMinimalPlay
+                color="#fbfbf3"
+                strokeWidth={2.5}
+                className="mr-5 w-6 h-6"
+              />
             )}
-            {currentAudio.length ? currentAudio.map((item) => {
-              const iconSrc = `/icons/${item.soundName}.png`;
-              return (
-                <Image
-                  key={iconSrc}
-                  src={iconSrc}
-                  alt="Currently Playing"
-                  className="mr-5 w-6 h-6"
-                  width={100}
-                  height={100}
-                />
-              );
-            }) : <div className="mr-5 w-6 h-6" />}
+            {currentAudio.length ? (
+              currentAudio.map((item) => {
+                const iconSrc = `/icons/${item.soundName}.png`;
+                return (
+                  <Image
+                    key={iconSrc}
+                    src={iconSrc}
+                    alt="Currently Playing"
+                    className="mr-5 w-6 h-6"
+                    width={100}
+                    height={100}
+                  />
+                );
+              })
+            ) : ( */}
+            <div className="mr-5 w-6 h-6" />
+            {/* )} */}
           </div>
         </>
       )}

@@ -36,9 +36,9 @@ const FullScreenToggle = () => {
   return (
     <Button onClick={handleFullscreenToggle} variant="ghost" size="icon">
       {isFullscreen ? (
-        <Minimize2 className="h-[1.5rem] w-[1.3rem] text-gray-300"/>
+        <Minimize2 style={{filter: 'drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)'}} color="#fbfbf3" strokeWidth={2.5} className="h-[1.5rem] w-[1.3rem]"/>
       ) : (
-        <Maximize2 className="h-[1.5rem] w-[1.3rem] text-gray-300"/>
+        <Maximize2 style={{filter: 'drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)'}} color="#fbfbf3" strokeWidth={2.5} className="h-[1.5rem] w-[1.3rem]"/>
       )}
     </Button>
   );

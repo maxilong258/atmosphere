@@ -11,17 +11,16 @@ export default function IndexPage() {
   const { isSheetOpen } = useSettingsStore();
 
   return (
-    <div className="w-screen h-screen overflow-hidden relative"
-      style={{
-        transform: isSheetOpen ? 'scale(0.99, 0.97)' : 'scale(1)',
-        borderRadius: isSheetOpen ? '15px' : '0', // 根据状态添加圆角
-        transition: 'transform 0.3s ease, border-radius 0.3s ease' // 添加过渡效果
-      }}
-    >
+    <div className="w-screen h-screen overflow-hidden relative" >
       <BackgroundPlayer />
       <Image
         className="w-full h-full object-cover"
-        src={currentBackground ?? "/bgs/white-noise.gif"}
+        style={{
+          padding: isSheetOpen ? '15px' : '0',
+          borderRadius: isSheetOpen ? '30px' : '0', // 根据状态添加圆角
+          transition: 'padding 0.3s ease, border-radius 0.3s ease' // 添加过渡效果
+        }}
+        src={currentBackground ?? "/bgs/loading1.gif"}
         width={"100"}
         height={"100"}
         alt=""
