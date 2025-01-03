@@ -12,7 +12,7 @@ interface Audio {
 
 interface AudioState {
   audios: Record<string, Audio>; // 以 soundUrl 为键，存储多个音频的状态
-  toggleAudio: (soundUrl: string) => void;
+  toggleAudio: (soundUrl: string, toggleToClose?: boolean) => void;
   setVolume: (soundUrl: string, newVolume: number) => void;
   cleanAudios: () => void;
   loadAudioFromUrl: () => void;
@@ -35,7 +35,7 @@ export const useAudioStore = create<AudioState>()(
     (set, get) => ({
       audios: {},
 
-      toggleAudio: (soundUrl: string) => {
+      toggleAudio: (soundUrl: string, toggleToClose?: boolean) => {
         const { audios } = get();
         const currentAudio = audios[soundUrl];
         const soundName = extractFileName(soundUrl);
@@ -52,6 +52,9 @@ export const useAudioStore = create<AudioState>()(
             },
           }));
         } else {
+          if (toggleToClose) {
+            return
+          }
           let audioRef = currentAudio?.audioRef;
           if (!audioRef) {
             audioRef = new Audio(soundUrl);
@@ -122,7 +125,7 @@ export const useAudioStore = create<AudioState>()(
 
       cleanAudios: () => {
         const { audios, toggleAudio } = get()
-        Object.keys(audios).forEach(key => toggleAudio(key))
+        Object.keys(audios).forEach(key => toggleAudio(key, true))
         set({
           audios: {}
         })

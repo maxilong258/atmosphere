@@ -1,9 +1,9 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "tube_",
+  name: "My Ambience",
   description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
+    "Create Your Music Ambience",
   // mainNav: [
   //   {
   //     title: "Home",

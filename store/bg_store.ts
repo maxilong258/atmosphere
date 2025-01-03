@@ -8,7 +8,7 @@ interface BackgroundState {
   loadBgFromUrl: () => void;
 }
 
-const defaultBg = "rain-street";
+const defaultBg = "my-window";
 
 export const useBackgroundStore = create<BackgroundState>()(
   // persist(

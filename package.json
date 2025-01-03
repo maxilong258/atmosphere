@@ -1,6 +1,6 @@
 {
-  "name": "atmosphere",
-  "version": "0.1.0",
+  "name": "my_ambience",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",

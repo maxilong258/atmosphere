@@ -10,6 +10,7 @@ import {
   FastForward,
   CircleX,
   Twitter,
+  Mail,
 } from "lucide-react";
 // import Image from "next/image";
 import { SettingsSheet } from "@/components/settings_sheet";
@@ -24,20 +25,17 @@ import MyTimer from "../MyTimer";
 
 export const BottomControls = () => {
   const { audios, cleanAudios } = useAudioStore();
-  const {
-    currentVideoUrl,
-    // isPlaying,
-    cleanVideo,
-    loadVideoFromUrl,
-  } = useVideoStore();
+  const { currentVideoUrl, cleanVideo, loadVideoFromUrl } = useVideoStore();
   const { loadAudioFromUrl } = useAudioStore();
   const { loadBgFromUrl, setBackground } = useBackgroundStore();
   const { isInited, setInitDone } = useSettingsStore();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [whiteNoiseAudio, setWhiteNoiseAudio] =
     useState<HTMLAudioElement | null>(null);
 
   const handleShuffle = () => {
+    setIsLoading(true);
     handleClear();
     const randomInt = Math.floor(Math.random() * 10);
     setBackground(`loading${randomInt}`);
@@ -55,6 +53,7 @@ export const BottomControls = () => {
       loadVideoFromUrl();
       loadAudioFromUrl();
       loadBgFromUrl();
+      setIsLoading(false);
     }, 200);
   };
 
@@ -66,6 +65,7 @@ export const BottomControls = () => {
   };
 
   const handlePrev = () => {
+    setIsLoading(true);
     const searchStr = window.location.search;
     handleClear();
     const randomInt = Math.floor(Math.random() * 10);
@@ -88,10 +88,12 @@ export const BottomControls = () => {
       loadVideoFromUrl();
       loadAudioFromUrl();
       loadBgFromUrl();
+      setIsLoading(false);
     }, 200);
   };
 
   const handleNext = () => {
+    setIsLoading(true);
     const searchStr = window.location.search;
     handleClear();
     const randomInt = Math.floor(Math.random() * 10);
@@ -114,6 +116,7 @@ export const BottomControls = () => {
       loadVideoFromUrl();
       loadAudioFromUrl();
       loadBgFromUrl();
+      setIsLoading(false);
     }, 200);
   };
 
@@ -127,7 +130,6 @@ export const BottomControls = () => {
     }
 
     loadBgFromUrl();
-    // 事件处理函数
     const handleInteraction = () => {
       if (!isInited) {
         const params = new URLSearchParams(window.location.search);
@@ -141,31 +143,41 @@ export const BottomControls = () => {
         } else {
           handleShuffle();
         }
-
         setInitDone();
       }
     };
 
-    // 监听键盘按键事件
-    const handleKeyDown = () => {
-      handleInteraction();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!isInited) {
+        handleInteraction();
+      } else {
+        // 左箭头触发 handlePrev，右箭头触发 handleNext
+        if (event.key === "ArrowLeft") {
+          handlePrev();
+        } else if (event.key === "ArrowRight") {
+          handleNext();
+        }
+      }
     };
 
-    // 监听鼠标点击事件
     const handleClick = () => {
       handleInteraction();
     };
 
-    // 添加事件监听器
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("click", handleClick);
 
-    // 清除事件监听器
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("click", handleClick);
     };
   }, [isInited]);
+
+  const handleMailClick = () => {
+    const email = "adc3080027554@gmail.com";
+    const mailtoLink = `mailto:${email}`;
+    window.location.href = mailtoLink;
+  };
 
   return (
     <div className="z-40 absolute bottom-0 ">
@@ -189,7 +201,12 @@ export const BottomControls = () => {
                   className="h-[1.5rem] w-[1.3rem]"
                 />
               </Button>
-              <Button variant="ghost" size="icon" onClick={handleShuffle}>
+              <Button
+                disabled={isLoading}
+                variant="ghost"
+                size="icon"
+                onClick={handleShuffle}
+              >
                 <Shuffle
                   style={{
                     filter:
@@ -200,7 +217,12 @@ export const BottomControls = () => {
                   className="h-[1.5rem] w-[1.3rem]"
                 />
               </Button>
-              <Button variant="ghost" size="icon" onClick={handlePrev}>
+              <Button
+                disabled={isLoading}
+                variant="ghost"
+                size="icon"
+                onClick={handlePrev}
+              >
                 <Rewind
                   style={{
                     filter:
@@ -211,7 +233,12 @@ export const BottomControls = () => {
                   className="h-[1.5rem] w-[1.3rem]"
                 />
               </Button>
-              <Button variant="ghost" size="icon" onClick={handleNext}>
+              <Button
+                disabled={isLoading}
+                variant="ghost"
+                size="icon"
+                onClick={handleNext}
+              >
                 <FastForward
                   style={{
                     filter:
@@ -227,6 +254,17 @@ export const BottomControls = () => {
             <div className="flex m-6 mb-0 space-x-1">
               <FullScreenToggle />
               <MyTimer />
+              <Button variant="ghost" size="icon" onClick={handleMailClick}>
+                <Mail
+                  style={{
+                    filter:
+                      "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
+                  }}
+                  color="#fbfbf3"
+                  strokeWidth={2.5}
+                  className="h-[1.5rem] w-[1.3rem]"
+                />
+              </Button>
               <a
                 href="https://x.com/MaxiLong1234" // 替换为你的 Twitter 主页链接
                 target="_blank" // 在新标签页中打开

@@ -192,6 +192,8 @@ export const SettingsSheet = () => {
               Background
             </span>
 
+            <BgControl bgName="my-window" />
+            <BgControl bgName="over-the-sea" />
             <BgControl bgName="rain-on-window" />
             <BgControl bgName="rain-town" />
             <BgControl bgName="retrowave" />
