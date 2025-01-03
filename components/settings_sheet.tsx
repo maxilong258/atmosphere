@@ -199,6 +199,9 @@ export const SettingsSheet = () => {
             <BgControl bgName="wind-turbine" />
             <BgControl bgName="cyberpunk" />
             <BgControl bgName="coding" />
+            <BgControl bgName="street" />
+            <BgControl bgName="forest" />
+            <BgControl bgName="seaside-plaza" />
           </div>
         </div>
       </DrawerContent>

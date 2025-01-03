@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getPlayingAudios, useAudioStore } from "@/store/audio_store";
 import { useVideoStore } from "@/store/video_store";
 import {
@@ -9,6 +9,7 @@ import {
   Rewind,
   FastForward,
   CircleX,
+  Twitter,
 } from "lucide-react";
 // import Image from "next/image";
 import { SettingsSheet } from "@/components/settings_sheet";
@@ -19,31 +20,35 @@ import { useSettingsStore } from "@/store/settings_store";
 import { updateUrlParams } from "@/lib/urlUtils";
 import { PLAY_LIST } from "@/config/playlist";
 import FullScreenToggle from "../full_screen_toggle";
+import MyTimer from "../MyTimer";
 
 export const BottomControls = () => {
   const { audios, cleanAudios } = useAudioStore();
-  const { currentVideoUrl, 
-    // isPlaying, 
-    cleanVideo, loadVideoFromUrl } =
-    useVideoStore();
+  const {
+    currentVideoUrl,
+    // isPlaying,
+    cleanVideo,
+    loadVideoFromUrl,
+  } = useVideoStore();
   const { loadAudioFromUrl } = useAudioStore();
   const { loadBgFromUrl, setBackground } = useBackgroundStore();
   const { isInited, setInitDone } = useSettingsStore();
 
-  const whiteNoiseAudio = new Audio("/sounds/aaa-white-noise.mp3");
-  whiteNoiseAudio.preload = "auto"; // 确保音频准备好可以立即播放
-  whiteNoiseAudio.volume = 0.12;
+  const [whiteNoiseAudio, setWhiteNoiseAudio] =
+    useState<HTMLAudioElement | null>(null);
 
   const handleShuffle = () => {
     handleClear();
     const randomInt = Math.floor(Math.random() * 10);
     setBackground(`loading${randomInt}`);
-    whiteNoiseAudio.currentTime = 0;
-    whiteNoiseAudio.play().then(() => {
-      setTimeout(() => {
-        whiteNoiseAudio.pause();
-      }, 200);
-    });
+    if (whiteNoiseAudio) {
+      whiteNoiseAudio!.currentTime = 0;
+      whiteNoiseAudio!.play().then(() => {
+        setTimeout(() => {
+          whiteNoiseAudio!.pause();
+        }, 200);
+      });
+    }
     setTimeout(() => {
       const randomUrl = PLAY_LIST[Math.floor(Math.random() * PLAY_LIST.length)];
       window.history.pushState({}, "", randomUrl);
@@ -65,12 +70,14 @@ export const BottomControls = () => {
     handleClear();
     const randomInt = Math.floor(Math.random() * 10);
     setBackground(`loading${randomInt}`);
-    whiteNoiseAudio.currentTime = 0;
-    whiteNoiseAudio.play().then(() => {
-      setTimeout(() => {
-        whiteNoiseAudio.pause();
-      }, 200);
-    });
+    if (whiteNoiseAudio) {
+      whiteNoiseAudio!.currentTime = 0;
+      whiteNoiseAudio!.play().then(() => {
+        setTimeout(() => {
+          whiteNoiseAudio!.pause();
+        }, 200);
+      });
+    }
     setTimeout(() => {
       const index = PLAY_LIST.findIndex((item) => item === searchStr);
       if (index > 0 && index < PLAY_LIST.length) {
@@ -89,12 +96,14 @@ export const BottomControls = () => {
     handleClear();
     const randomInt = Math.floor(Math.random() * 10);
     setBackground(`loading${randomInt}`);
-    whiteNoiseAudio.currentTime = 0;
-    whiteNoiseAudio.play().then(() => {
-      setTimeout(() => {
-        whiteNoiseAudio.pause();
-      }, 200);
-    });
+    if (whiteNoiseAudio) {
+      whiteNoiseAudio!.currentTime = 0;
+      whiteNoiseAudio!.play().then(() => {
+        setTimeout(() => {
+          whiteNoiseAudio!.pause();
+        }, 200);
+      });
+    }
     setTimeout(() => {
       const index = PLAY_LIST.findIndex((item) => item === searchStr);
       if (index >= 0 && index < PLAY_LIST.length - 1) {
@@ -109,6 +118,14 @@ export const BottomControls = () => {
   };
 
   useEffect(() => {
+    // 确保在客户端才加载 Audio
+    if (typeof window !== "undefined") {
+      const audio = new Audio("/sounds/aaa-white-noise.mp3");
+      audio.preload = "auto";
+      audio.volume = 0.12;
+      setWhiteNoiseAudio(audio);
+    }
+
     loadBgFromUrl();
     // 事件处理函数
     const handleInteraction = () => {
@@ -148,7 +165,7 @@ export const BottomControls = () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("click", handleClick);
     };
-  }, [isInited, audios, currentVideoUrl, handleShuffle, loadAudioFromUrl, loadBgFromUrl, loadAudioFromUrl, loadVideoFromUrl, setInitDone]);
+  }, [isInited]);
 
   return (
     <div className="z-40 absolute bottom-0 ">
@@ -161,49 +178,45 @@ export const BottomControls = () => {
           <div className="flex justify-between w-screen">
             <div className="flex m-6 mb-0 space-x-1">
               <SettingsSheet />
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleClear}
-              >
+              <Button variant="ghost" size="icon" onClick={handleClear}>
                 <CircleX
-                  style={{filter: 'drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)'}} 
+                  style={{
+                    filter:
+                      "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
+                  }}
                   color="#fbfbf3"
                   strokeWidth={2.5}
                   className="h-[1.5rem] w-[1.3rem]"
                 />
               </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleShuffle}
-              >
+              <Button variant="ghost" size="icon" onClick={handleShuffle}>
                 <Shuffle
-                  style={{filter: 'drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)'}} 
+                  style={{
+                    filter:
+                      "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
+                  }}
                   color="#fbfbf3"
                   strokeWidth={2.5}
                   className="h-[1.5rem] w-[1.3rem]"
                 />
               </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handlePrev}
-              >
+              <Button variant="ghost" size="icon" onClick={handlePrev}>
                 <Rewind
-                  style={{filter: 'drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)'}} 
+                  style={{
+                    filter:
+                      "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
+                  }}
                   color="#fbfbf3"
                   strokeWidth={2.5}
                   className="h-[1.5rem] w-[1.3rem]"
                 />
               </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleNext}
-              >
+              <Button variant="ghost" size="icon" onClick={handleNext}>
                 <FastForward
-                  style={{filter: 'drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)'}} 
+                  style={{
+                    filter:
+                      "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
+                  }}
                   color="#fbfbf3"
                   strokeWidth={2.5}
                   className="h-[1.5rem] w-[1.3rem]"
@@ -211,8 +224,26 @@ export const BottomControls = () => {
               </Button>
             </div>
 
-            <div className="m-6 mb-0">
+            <div className="flex m-6 mb-0 space-x-1">
               <FullScreenToggle />
+              <MyTimer />
+              <a
+                href="https://x.com/MaxiLong1234" // 替换为你的 Twitter 主页链接
+                target="_blank" // 在新标签页中打开
+                rel="noopener noreferrer" // 安全性增强
+              >
+                <Button variant="ghost" size="icon">
+                  <Twitter
+                    style={{
+                      filter:
+                        "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
+                    }}
+                    color="#fbfbf3"
+                    strokeWidth={2.5}
+                    className="h-[1.5rem] w-[1.3rem]"
+                  />
+                </Button>
+              </a>
             </div>
           </div>
 
