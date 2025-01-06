@@ -8,26 +8,30 @@ import Image from "next/image";
 
 export default function IndexPage() {
   const { currentBackground } = useBackgroundStore();
-  const { isSheetOpen } = useSettingsStore();
+  const { isSheetOpen, isShowLayer } = useSettingsStore();
 
   return (
-    <div className="w-screen h-screen overflow-hidden relative" >
+    <div className="w-screen h-screen overflow-hidden relative">
       <BackgroundPlayer />
       <Image
         className="w-full h-full object-cover"
         style={{
-          padding: isSheetOpen ? '15px' : '0',
-          borderRadius: isSheetOpen ? '30px' : '0', // 根据状态添加圆角
-          transition: 'padding 0.3s ease, border-radius 0.3s ease' // 添加过渡效果
+          padding: isSheetOpen ? "15px" : "0",
+          borderRadius: isSheetOpen ? "30px" : "0", // 根据状态添加圆角
+          transition: "padding 0.3s ease, border-radius 0.3s ease", // 添加过渡效果
         }}
         src={currentBackground ?? "/bgs/loading1.gif"}
         width={"100"}
         height={"100"}
         alt=""
       />
-      <div className={styles.crtLines}></div>
-      <div className={styles.darken}></div>
-      <div className={styles.vignette}></div>
+      {isShowLayer && (
+        <div>
+          <div className={styles.crtLines}></div>
+          <div className={styles.darken}></div>
+          <div className={styles.vignette}></div>
+        </div>
+      )}
     </div>
   );
 }

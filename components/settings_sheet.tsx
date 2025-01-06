@@ -8,14 +8,8 @@ import {
 } from "@/components/ui/drawer";
 
 import { Button } from "@/components/ui/button";
-import {
-  Eye,
-  EyeClosed,
-  Pause,
-  Play,
-  Settings,
-  Volume2,
-} from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Eye, EyeClosed, Pause, Play, Settings, Volume2 } from "lucide-react";
 import { AudioControl } from "@/components/AudioControl/audio_control";
 import { BgControl } from "./BgControl/bg_control";
 import { useVideoStore } from "@/store/video_store";
@@ -24,7 +18,8 @@ import { Slider } from "@/components/ui/slider";
 import { useSettingsStore } from "@/store/settings_store";
 
 export const SettingsSheet = () => {
-  const { isSheetOpen, closeSheet, openSheet } = useSettingsStore();
+  const { isSheetOpen, isShowLayer, closeSheet, openSheet, setShowLayer } =
+    useSettingsStore();
 
   const {
     currentVideoUrl,
@@ -63,7 +58,10 @@ export const SettingsSheet = () => {
       <DrawerTrigger asChild>
         <Button variant="ghost" size="icon">
           <Settings
-            style={{filter: 'drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)'}} 
+            style={{
+              filter:
+                "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
+            }}
             strokeWidth={2.5}
             color="#fbfbf3"
             className="h-[1.5rem] w-[1.3rem]"
@@ -77,7 +75,10 @@ export const SettingsSheet = () => {
 
         <div className="mx-auto w-full overflow-y-scroll flex justify-center">
           <div className="max-w-screen-xl">
-            <span style={{textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)",}} className="text-2xl text-white font-bold m-3 block">
+            <span
+              style={{ textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)" }}
+              className="text-2xl text-white font-bold m-3 block"
+            >
               Video Link
             </span>
 
@@ -127,7 +128,10 @@ export const SettingsSheet = () => {
               )}
             </span>
 
-            <span style={{textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)",}} className="text-2xl text-white font-bold m-3 block">
+            <span
+              style={{ textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)" }}
+              className="text-2xl text-white font-bold m-3 block"
+            >
               Nature
             </span>
             <AudioControl soundName="forest" />
@@ -144,7 +148,10 @@ export const SettingsSheet = () => {
             <AudioControl soundName="waterfall" />
             <AudioControl soundName="deep-sea" />
 
-            <span style={{textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)",}} className="text-2xl text-white font-bold m-3 block">
+            <span
+              style={{ textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)" }}
+              className="text-2xl text-white font-bold m-3 block"
+            >
               Rain
             </span>
             <AudioControl soundName="light-rain" />
@@ -155,7 +162,10 @@ export const SettingsSheet = () => {
             <AudioControl soundName="umbrella" />
             <AudioControl soundName="rain-on-leaves" />
 
-            <span style={{textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)",}} className="text-2xl text-white font-bold m-3 block">
+            <span
+              style={{ textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)" }}
+              className="text-2xl text-white font-bold m-3 block"
+            >
               Animals
             </span>
             <AudioControl soundName="birds" />
@@ -168,7 +178,10 @@ export const SettingsSheet = () => {
             <AudioControl soundName="wolf" />
             <AudioControl soundName="whale" />
 
-            <span style={{textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)",}} className="text-2xl text-white font-bold m-3 block">
+            <span
+              style={{ textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)" }}
+              className="text-2xl text-white font-bold m-3 block"
+            >
               Room
             </span>
             <AudioControl soundName="keyboard" />
@@ -177,7 +190,10 @@ export const SettingsSheet = () => {
             <AudioControl soundName="wind-chimes" />
             <AudioControl soundName="ceiling-fan" />
 
-            <span style={{textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)",}} className="text-2xl text-white font-bold m-3 block">
+            <span
+              style={{ textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)" }}
+              className="text-2xl text-white font-bold m-3 block"
+            >
               City
             </span>
             <AudioControl soundName="cafe" />
@@ -188,7 +204,10 @@ export const SettingsSheet = () => {
             <AudioControl soundName="train" />
             <AudioControl soundName="boat" />
 
-            <span style={{textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)",}} className="text-2xl text-white font-bold m-3 block">
+            <span
+              style={{ textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)" }}
+              className="text-2xl text-white font-bold m-3 block"
+            >
               Background
             </span>
 
@@ -206,6 +225,24 @@ export const SettingsSheet = () => {
             <BgControl bgName="seaside-plaza" />
             <BgControl bgName="claw-machine" />
             <BgControl bgName="shop-room" />
+
+            <span
+              style={{ textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)" }}
+              className="text-2xl text-white font-bold m-3 block"
+            >
+              Settings
+            </span>
+
+            <span className="flex items-center m-3 gap-3">
+              <span
+                style={{ textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)" }}
+              >
+                Mask layer:
+              </span>{" "}
+              <Switch checked={isShowLayer} onCheckedChange={setShowLayer} />
+            </span>
+
+            <div style={{ height: "100px" }}></div>
           </div>
         </div>
       </DrawerContent>
