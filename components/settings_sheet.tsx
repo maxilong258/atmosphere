@@ -204,6 +204,8 @@ export const SettingsSheet = () => {
             <BgControl bgName="street" />
             <BgControl bgName="forest" />
             <BgControl bgName="seaside-plaza" />
+            <BgControl bgName="claw-machine" />
+            <BgControl bgName="shop-room" />
           </div>
         </div>
       </DrawerContent>

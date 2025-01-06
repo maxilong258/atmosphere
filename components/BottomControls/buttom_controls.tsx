@@ -22,6 +22,8 @@ import { updateUrlParams } from "@/lib/urlUtils";
 import { PLAY_LIST } from "@/config/playlist";
 import FullScreenToggle from "../full_screen_toggle";
 import MyTimer from "../MyTimer";
+import { SaveList } from "../SaveList";
+import { useSavedLinks } from "@/store/saved_link_store";
 
 export const BottomControls = () => {
   const { audios, cleanAudios } = useAudioStore();
@@ -30,11 +32,30 @@ export const BottomControls = () => {
   const { loadBgFromUrl, setBackground } = useBackgroundStore();
   const { isInited, setInitDone } = useSettingsStore();
   const [isLoading, setIsLoading] = useState(false);
+  const { links } = useSavedLinks()
 
   const [whiteNoiseAudio, setWhiteNoiseAudio] =
     useState<HTMLAudioElement | null>(null);
 
+  const playList = [...PLAY_LIST, ...links.map(item => item.url)]
+
   const handleShuffle = () => {
+    setIsLoading(true);
+    handleClear();
+    const randomInt = Math.floor(Math.random() * 10);
+    setBackground(`loading${randomInt}`);
+    
+    setTimeout(() => {
+      const randomUrl = playList[Math.floor(Math.random() * playList.length)];
+      window.history.pushState({}, "", randomUrl);
+      loadVideoFromUrl();
+      loadAudioFromUrl();
+      loadBgFromUrl();
+      setIsLoading(false);
+    }, 200);
+  };
+
+  const onPlayListItem = (url: string) => {
     setIsLoading(true);
     handleClear();
     const randomInt = Math.floor(Math.random() * 10);
@@ -48,14 +69,13 @@ export const BottomControls = () => {
       });
     }
     setTimeout(() => {
-      const randomUrl = PLAY_LIST[Math.floor(Math.random() * PLAY_LIST.length)];
-      window.history.pushState({}, "", randomUrl);
+      window.history.pushState({}, "", url);
       loadVideoFromUrl();
       loadAudioFromUrl();
       loadBgFromUrl();
       setIsLoading(false);
     }, 200);
-  };
+  }
 
   const handleClear = () => {
     updateUrlParams({ sounds: null });
@@ -79,11 +99,11 @@ export const BottomControls = () => {
       });
     }
     setTimeout(() => {
-      const index = PLAY_LIST.findIndex((item) => item === searchStr);
-      if (index > 0 && index < PLAY_LIST.length) {
-        window.history.pushState({}, "", PLAY_LIST[index - 1]);
+      const index = playList.findIndex((item) => item === searchStr);
+      if (index > 0 && index < playList.length) {
+        window.history.pushState({}, "", playList[index - 1]);
       } else {
-        window.history.pushState({}, "", PLAY_LIST[PLAY_LIST.length - 1]);
+        window.history.pushState({}, "", playList[playList.length - 1]);
       }
       loadVideoFromUrl();
       loadAudioFromUrl();
@@ -107,11 +127,11 @@ export const BottomControls = () => {
       });
     }
     setTimeout(() => {
-      const index = PLAY_LIST.findIndex((item) => item === searchStr);
-      if (index >= 0 && index < PLAY_LIST.length - 1) {
-        window.history.pushState({}, "", PLAY_LIST[index + 1]);
+      const index = playList.findIndex((item) => item === searchStr);
+      if (index >= 0 && index < playList.length - 1) {
+        window.history.pushState({}, "", playList[index + 1]);
       } else {
-        window.history.pushState({}, "", PLAY_LIST[0]);
+        window.history.pushState({}, "", playList[0]);
       }
       loadVideoFromUrl();
       loadAudioFromUrl();
@@ -175,7 +195,8 @@ export const BottomControls = () => {
 
   const handleMailClick = () => {
     const email = "adc3080027554@gmail.com";
-    const mailtoLink = `mailto:${email}`;
+    const subject = "[Feedback for My Ambience]"; 
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
     window.location.href = mailtoLink;
   };
 
@@ -253,6 +274,7 @@ export const BottomControls = () => {
 
             <div className="flex m-6 mb-0 space-x-1">
               <FullScreenToggle />
+              <SaveList onPlayListItem={onPlayListItem} />
               <MyTimer />
               <Button variant="ghost" size="icon" onClick={handleMailClick}>
                 <Mail
