@@ -11,6 +11,7 @@ import {
   CircleX,
   Twitter,
   Mail,
+  Github,
 } from "lucide-react";
 // import Image from "next/image";
 import { SettingsSheet } from "@/components/settings_sheet";
@@ -287,6 +288,23 @@ export const BottomControls = () => {
                   className="h-[1.5rem] w-[1.3rem]"
                 />
               </Button>
+              <a
+                href="https://github.com/maxilong258/atmosphere" // 替换为你的 Twitter 主页链接
+                target="_blank" // 在新标签页中打开
+                rel="noopener noreferrer" // 安全性增强
+              >
+                <Button variant="ghost" size="icon">
+                  <Github
+                    style={{
+                      filter:
+                        "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
+                    }}
+                    color="#fbfbf3"
+                    strokeWidth={2.5}
+                    className="h-[1.5rem] w-[1.3rem]"
+                  />
+                </Button>
+              </a>
               <a
                 href="https://x.com/MaxiLong1234" // 替换为你的 Twitter 主页链接
                 target="_blank" // 在新标签页中打开
