@@ -225,6 +225,7 @@ export const SettingsSheet = () => {
             <BgControl bgName="seaside-plaza" />
             <BgControl bgName="claw-machine" />
             <BgControl bgName="shop-room" />
+            <BgControl bgName="bonfire" />
 
             <span
               style={{ textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)" }}

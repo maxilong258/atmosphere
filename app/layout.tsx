@@ -19,9 +19,6 @@ export const metadata: Metadata = {
     { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
   icons: {
-    // icon: "/favicon.ico",
-    // shortcut: "/favicon-16x16.png",
-    // apple: "/apple-touch-icon.png",
     icon: "/logo.png",
   },
 };
@@ -44,7 +41,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <OpeningEffect>
               <div className="relative flex min-h-screen flex-col">
-                {/* <SiteHeader /> */}
                 <div className="absolute top-0 bottom-0 left-0 right-0">
                   {children}
                 </div>
