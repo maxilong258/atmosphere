@@ -1,6 +1,6 @@
 # My Ambience
 
-https://maxxilong.top
+https://myambience.vercel.app
 
 https://github.com/maxilong258/atmosphere
 
