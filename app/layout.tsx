@@ -14,6 +14,20 @@ export const metadata: Metadata = {
     template: `%s - ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  keywords: ['音乐氛围', '白噪音', '环境音', '放松', '工作专注'],
+  openGraph: {
+    type: 'website',
+    locale: 'zh_CN',
+    url: 'https://myambience.vercel.app',
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  metadataBase: new URL('https://myambience.vercel.app'),
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },

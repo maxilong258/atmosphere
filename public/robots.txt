@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://myambience.vercel.app/sitemap.xml
