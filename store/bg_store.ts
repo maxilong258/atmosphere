@@ -15,7 +15,7 @@ export const useBackgroundStore = create<BackgroundState>()(
     (set, get) => ({
       currentBackground: null,
       setBackground: (bgName: string) => {
-        const bgSrc = `/bgs/${bgName}.gif`;
+        const bgSrc = bgName.startsWith('http') ? bgName : `/bgs/${bgName}.gif`;
         set({ currentBackground: bgSrc });
         updateUrlParams({ background: bgName });
       },
@@ -24,7 +24,7 @@ export const useBackgroundStore = create<BackgroundState>()(
         const bgName = getUrlParam("background");
         const storedbg = get().currentBackground;
         if (bgName) {
-          set({ currentBackground: `/bgs/${bgName}.gif` });
+          set({ currentBackground: bgName.startsWith('http') ? bgName : `/bgs/${bgName}.gif` });
           updateUrlParams({ background: bgName });
         } else if (storedbg) {
           // const bgNameFromStorage = storedbg.split("/").pop()?.replace(".gif", "");

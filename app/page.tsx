@@ -4,7 +4,7 @@ import { useBackgroundStore } from "@/store/bg_store";
 import styles from "./bg.module.css";
 import BackgroundPlayer from "@/components/VideoPlayer/video_player";
 import { useSettingsStore } from "@/store/settings_store";
-import Image from "next/image";
+// import Image from "next/image";
 
 export default function IndexPage() {
   const { currentBackground } = useBackgroundStore();
@@ -13,7 +13,7 @@ export default function IndexPage() {
   return (
     <div className="w-screen h-screen overflow-hidden relative">
       <BackgroundPlayer />
-      <Image
+      <img
         className="w-full h-full object-cover"
         style={{
           padding: isSheetOpen ? "15px" : "0",

@@ -31,21 +31,21 @@ export const BottomControls = () => {
   const { currentVideoUrl, cleanVideo, loadVideoFromUrl } = useVideoStore();
   const { loadAudioFromUrl } = useAudioStore();
   const { loadBgFromUrl, setBackground } = useBackgroundStore();
-  const { isInited, setInitDone } = useSettingsStore();
+  const { isSheetOpen, isInited, setInitDone } = useSettingsStore();
   const [isLoading, setIsLoading] = useState(false);
-  const { links } = useSavedLinks()
+  const { links } = useSavedLinks();
 
   const [whiteNoiseAudio, setWhiteNoiseAudio] =
     useState<HTMLAudioElement | null>(null);
 
-  const playList = [...PLAY_LIST, ...links.map(item => item.url)]
+  const playList = [...PLAY_LIST, ...links.map((item) => item.url)];
 
   const handleShuffle = () => {
     setIsLoading(true);
     handleClear();
     const randomInt = Math.floor(Math.random() * 10);
     setBackground(`loading${randomInt}`);
-    
+
     setTimeout(() => {
       const randomUrl = playList[Math.floor(Math.random() * playList.length)];
       window.history.pushState({}, "", randomUrl);
@@ -76,7 +76,7 @@ export const BottomControls = () => {
       loadBgFromUrl();
       setIsLoading(false);
     }, 200);
-  }
+  };
 
   const handleClear = () => {
     updateUrlParams({ sounds: null });
@@ -172,11 +172,13 @@ export const BottomControls = () => {
       if (!isInited) {
         handleInteraction();
       } else {
-        // 左箭头触发 handlePrev，右箭头触发 handleNext
-        if (event.key === "ArrowLeft") {
-          handlePrev();
-        } else if (event.key === "ArrowRight") {
-          handleNext();
+        if (!isSheetOpen) {
+          // 左箭头触发 handlePrev，右箭头触发 handleNext
+          if (event.key === "ArrowLeft") {
+            handlePrev();
+          } else if (event.key === "ArrowRight") {
+            handleNext();
+          }
         }
       }
     };
@@ -192,11 +194,11 @@ export const BottomControls = () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("click", handleClick);
     };
-  }, [isInited]);
+  }, [isInited, isSheetOpen]);
 
   const handleMailClick = () => {
     const email = "adc3080027554@gmail.com";
-    const subject = "[Feedback for My Ambience]"; 
+    const subject = "[Feedback for My Ambience]";
     const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
     window.location.href = mailtoLink;
   };

@@ -16,10 +16,14 @@ import { useVideoStore } from "@/store/video_store";
 import { Input } from "./ui/input";
 import { Slider } from "@/components/ui/slider";
 import { useSettingsStore } from "@/store/settings_store";
+import { useBackgroundStore } from "@/store/bg_store";
+
 
 export const SettingsSheet = () => {
   const { isSheetOpen, isShowLayer, closeSheet, openSheet, setShowLayer } =
     useSettingsStore();
+
+  const { currentBackground, setBackground } = useBackgroundStore();
 
   const {
     currentVideoUrl,
@@ -209,6 +213,18 @@ export const SettingsSheet = () => {
               className="text-2xl text-white font-bold m-3 block"
             >
               Background
+            </span>
+
+            <span className="block mx-3 mt-2 mb-4">
+              <Input
+                type="text"
+                placeholder="Paste background link"
+                defaultValue={currentBackground ?? ''}
+                onChange={(e) => {
+                  setBackground(e.target.value);
+                }}
+                className="border border-gray-300 rounded px-2 py-1 max-w-[500px]"
+              />
             </span>
 
             <BgControl bgName="my-window" />
