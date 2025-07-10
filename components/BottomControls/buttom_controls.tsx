@@ -12,10 +12,12 @@ import {
   Twitter,
   Mail,
   Github,
+  Heart,
 } from "lucide-react";
 // import Image from "next/image";
 import { SettingsSheet } from "@/components/settings_sheet";
 import { Button } from "../ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { useBackgroundStore } from "@/store/bg_store";
 import TypingEffect from "../TypingEffect/typing_effect";
 import { useSettingsStore } from "@/store/settings_store";
@@ -212,19 +214,7 @@ export const BottomControls = () => {
       ) : (
         <>
           <div className="flex justify-between w-screen">
-            <div className="flex m-6 mb-0 space-x-1">
-              <SettingsSheet />
-              <Button variant="ghost" size="icon" onClick={handleClear}>
-                <CircleX
-                  style={{
-                    filter:
-                      "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
-                  }}
-                  color="#fbfbf3"
-                  strokeWidth={2.5}
-                  className="h-[1.5rem] w-[1.3rem]"
-                />
-              </Button>
+            <div className="flex m-10 mb-12 space-x-1">
               <Button
                 disabled={isLoading}
                 variant="ghost"
@@ -273,14 +263,12 @@ export const BottomControls = () => {
                   className="h-[1.5rem] w-[1.3rem]"
                 />
               </Button>
+              <SettingsSheet />
             </div>
 
-            <div className="flex m-6 mb-0 space-x-1">
-              <FullScreenToggle />
-              <SaveList onPlayListItem={onPlayListItem} />
-              <MyTimer />
-              <Button variant="ghost" size="icon" onClick={handleMailClick}>
-                <Mail
+            <div className="flex m-10 mb-12 space-x-1">
+              <Button variant="ghost" size="icon" onClick={handleClear}>
+                <CircleX
                   style={{
                     filter:
                       "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
@@ -290,45 +278,99 @@ export const BottomControls = () => {
                   className="h-[1.5rem] w-[1.3rem]"
                 />
               </Button>
-              <a
-                href="https://github.com/maxilong258/atmosphere" // 替换为你的 Twitter 主页链接
-                target="_blank" // 在新标签页中打开
-                rel="noopener noreferrer" // 安全性增强
-              >
-                <Button variant="ghost" size="icon">
-                  <Github
-                    style={{
-                      filter:
-                        "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
-                    }}
-                    color="#fbfbf3"
-                    strokeWidth={2.5}
-                    className="h-[1.5rem] w-[1.3rem]"
-                  />
-                </Button>
-              </a>
-              <a
-                href="https://x.com/MaxiLong1234" // 替换为你的 Twitter 主页链接
-                target="_blank" // 在新标签页中打开
-                rel="noopener noreferrer" // 安全性增强
-              >
-                <Button variant="ghost" size="icon">
-                  <Twitter
-                    style={{
-                      filter:
-                        "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
-                    }}
-                    color="#fbfbf3"
-                    strokeWidth={2.5}
-                    className="h-[1.5rem] w-[1.3rem]"
-                  />
-                </Button>
-              </a>
+              <FullScreenToggle />
+              <SaveList onPlayListItem={onPlayListItem} />
+              <MyTimer />
+
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <Heart
+                      style={{
+                        filter:
+                          "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
+                      }}
+                      color="#fbfbf3"
+                      strokeWidth={2.5}
+                      className="h-[1.5rem] w-[1.3rem]"
+                    />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent
+                  className="w-48 p-3 bg-gray-900 text-white"
+                  side="top"
+                  align="end"
+                >
+                  <div className="flex flex-col space-y-2">
+                    <div className="flex items-center space-x-3">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleMailClick}
+                        className="h-8 w-8"
+                      >
+                        <Mail
+                          style={{
+                            filter:
+                              "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
+                          }}
+                          color="#fbfbf3"
+                          strokeWidth={2.5}
+                          className="h-4 w-4"
+                        />
+                      </Button>
+                      <span className="text-sm">Mail</span>
+                    </div>
+
+                    <div className="flex items-center space-x-3">
+                      <a
+                        href="https://github.com/maxilong258/atmosphere"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <Github
+                            style={{
+                              filter:
+                                "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
+                            }}
+                            color="#fbfbf3"
+                            strokeWidth={2.5}
+                            className="h-4 w-4"
+                          />
+                        </Button>
+                      </a>
+                      <span className="text-sm">GitHub</span>
+                    </div>
+
+                    <div className="flex items-center space-x-3">
+                      <a
+                        href="https://x.com/MaxiLong1234"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <Twitter
+                            style={{
+                              filter:
+                                "drop-shadow(0px 0px 2px hsl(120, 100%, 80%)) drop-shadow(0px 0px 8px green)",
+                            }}
+                            color="#fbfbf3"
+                            strokeWidth={2.5}
+                            className="h-4 w-4"
+                          />
+                        </Button>
+                      </a>
+                      <span className="text-sm">Twitter</span>
+                    </div>
+                  </div>
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
 
-          <div className="flex m-8 mt-3">
-            {/* {currentVideoUrl && isPlaying && (
+          {/* <div className="flex m-8 mt-3">
+            {currentVideoUrl && isPlaying && (
               <TvMinimalPlay
                 color="#fbfbf3"
                 strokeWidth={2.5}
@@ -349,10 +391,10 @@ export const BottomControls = () => {
                   />
                 );
               })
-            ) : ( */}
+            ) : (
             <div className="mr-5 w-6 h-6" />
-            {/* )} */}
-          </div>
+            )}
+          </div> */}
         </>
       )}
     </div>

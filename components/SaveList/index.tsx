@@ -42,14 +42,15 @@ export const SaveList = ({onPlayListItem}: {onPlayListItem: (url: string) => voi
         </Button>
       </DropdownMenuTrigger>
       
-      <DropdownMenuContent className="w-[20rem]">
+      <DropdownMenuContent className="w-[20rem] bg-gray-900 text-white">
         <div className="flex p-2 gap-2">
           <Input
             placeholder="Input group name"
             value={newLinkName}
             onChange={(e) => setNewLinkName(e.target.value)}
+            className="bg-gray-900 text-white"
           />
-          <Button size="icon" className="w-[4rem]" onClick={saveCurrentLink}>
+          <Button size="icon" className="w-[4rem] bg-gray-600 text-white" onClick={saveCurrentLink}>
             <Plus className="h-4 w-4" />
           </Button>
         </div>

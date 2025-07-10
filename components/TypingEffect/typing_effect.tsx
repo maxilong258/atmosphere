@@ -47,6 +47,7 @@ const TypingEffect = ({ text, speed = 50 }: TypingEffectProps) => {
           display: "inline-block",
           fontWeight: 'bold',
           textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)", // 添加红色阴影
+          color: "white",
         }}
       >
         {displayedText}

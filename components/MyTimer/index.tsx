@@ -95,16 +95,16 @@ const TimerApp = () => {
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent className="bg-transparent border-none shadow-none w-40 flex justify-center flex-col">
+        <PopoverContent className="bg-gray-900 w-32 flex justify-center flex-col">
           {/* 时间显示或者输入 */}
-          <Button style={{textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)",}}  className="block font-bold" variant="link" onClick={() => setIsEditingTime(true)}>
+          <Button style={{textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)",}}  className="block font-bold text-white" variant="link" onClick={() => setIsEditingTime(true)}>
             {isEditingTime ? (
               <div className="flex justify-center items-center">
                 <input
                   type="number"
                   value={newTime}
                   onChange={(e) => setNewTime(Number(e.target.value))}
-                  className="border p-1 rounded text-center w-16"
+                  className="border p-1 rounded text-center w-16 text-white bg-gray-900"
                 />
               </div>
             ) : (
@@ -113,13 +113,13 @@ const TimerApp = () => {
           </Button>
 
           {/* 开始/暂停按钮 */}
-          <Button style={{textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)",}}  className="block font-bold" variant="link" onClick={isEditingTime ? handleSetNewTime : toggleTimer}>
+          <Button style={{textShadow: "2px 2px 4px rgba(235, 235, 0, 0.6)",}}  className="block font-bold text-white" variant="link" onClick={isEditingTime ? handleSetNewTime : toggleTimer}>
             {isEditingTime ? 'Done' : isTimerActive ? "Pause" : "Start"}
           </Button>
 
           {/* 加 5 分钟按钮 */}
           <Button
-            className="block font-bold"
+            className="block font-bold text-white"
             variant="link"
             onClick={addFiveMinutes}
             disabled={isTimerFinished}
